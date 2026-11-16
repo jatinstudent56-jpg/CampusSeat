@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  function signedIn() { return request.auth != null; }
+  function admin() {
+    return signedIn() && (
+      request.auth.token.admin == true ||
+      (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+       get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')
+    );
+  }
+function validSeatId(id) {
+  return id.matches('^([A-Z]|A[A-D])(0[1-9]|1[0-5])$');
+}
+
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || admin());
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.role == 'student';
+      allow update, delete: if admin();
+    }
+    match /events/{eventId} {
+      allow read: if true;
+      allow create, update, delete: if admin();
+      match /seats/{seatId} {
+        allow read: if true;
+        allow create: if admin() || (signedIn() && validSeatId(seatId)
+          && get(/databases/$(database)/documents/events/$(eventId)).data.status in ['open', 'published', 'active']
+          && request.resource.data.status == 'booked'
+          && request.resource.data.uid == request.auth.uid
+          && existsAfter(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId))
+          && getAfter(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId)).data.uid == request.auth.uid
+          && getAfter(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId)).data.eventId == eventId
+          && getAfter(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId)).data.seatId == seatId);
+        allow update: if admin() || (signedIn()
+          && get(/databases/$(database)/documents/events/$(eventId)).data.status in ['open', 'published', 'active']
+          && resource.data.status == 'available'
+          && request.resource.data.status == 'booked'
+          && request.resource.data.uid == request.auth.uid
+          && existsAfter(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId))
+          && getAfter(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId)).data.uid == request.auth.uid
+          && getAfter(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId)).data.eventId == eventId
+          && getAfter(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId)).data.seatId == seatId);
+        allow delete: if admin();
+      }
+    }
+    match /bookings/{bookingId} {
+      allow read: if admin() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'confirmed'
+        && request.resource.data.eventId is string
+        && request.resource.data.seatId is string
+        && validSeatId(request.resource.data.seatId)
+        && get(/databases/$(database)/documents/events/$(request.resource.data.eventId)).data.status in ['open', 'published', 'active']
+        && request.resource.data.studentName is string
+        && request.resource.data.rollNumber is string
+        && getAfter(/databases/$(database)/documents/events/$(request.resource.data.eventId)/seats/$(request.resource.data.seatId)).data.bookingId == bookingId
+        && getAfter(/databases/$(database)/documents/events/$(request.resource.data.eventId)/seats/$(request.resource.data.seatId)).data.uid == request.auth.uid;
+      allow update, delete: if admin();
+    }
+  }
+}

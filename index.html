@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusSeat | College Auditorium Seat Booking</title>
+    <meta name="description" content="CampusSeat lets students browse college events, choose an exact seat from a live 225-seat map, and carry a digital pass to the entrance.">
+    <meta name="keywords" content="CampusSeat, college auditorium, seat booking, event booking, digital pass, symposium, workshop, seminar">
+    <meta name="author" content="CampusSeat">
+    <meta name="theme-color" content="#0b1220">
+    <meta name="color-scheme" content="dark light">
+
+    <!-- TODO: replace the host below with the real production domain before going live -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CampusSeat">
+    <meta property="og:title" content="CampusSeat | College Auditorium Seat Booking">
+    <meta property="og:description" content="Pick your exact seat for every campus event and walk in with a digital pass.">
+    <meta property="og:url" content="https://campusseat.example.com/">
+    <meta property="og:image" content="https://campusseat.example.com/image/main%20audi.jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CampusSeat | College Auditorium Seat Booking">
+    <meta name="twitter:description" content="Pick your exact seat for every campus event and walk in with a digital pass.">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1220'/%3E%3Ctext x='32' y='43' font-family='Arial,Helvetica,sans-serif' font-size='27' font-weight='bold' fill='%2360a5fa' text-anchor='middle'%3ECS%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <noscript>
+        <style>
+            /* Never leave the visitor staring at a blank page when scripts are blocked. */
+            .home-page.is-loading > *:not(.page-loader):not(.skip-link) { visibility: visible !important; }
+            .page-loader { display: none !important; }
+        </style>
+    </noscript>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "CampusSeat",
+        "description": "College auditorium seat booking portal for events, symposiums, workshops and cultural programs.",
+        "inLanguage": "en",
+        "publisher": {
+            "@type": "Organization",
+            "name": "CampusSeat",
+            "department": "Hi-tech Institute of Engineering and Technology"
+        }
+    }
+    </script>
+    <style>
+        :root {
+            --home-bg: #0b1220;
+            --home-panel: rgba(15, 23, 42, 0.78);
+            --home-panel-strong: #111827;
+            --home-card: rgba(15, 23, 42, 0.72);
+            --home-line: rgba(148, 163, 184, 0.18);
+            --home-text: #e2e8f0;
+            --home-muted: #a9b9d1;
+            --home-accent: #60a5fa;
+            --home-accent-strong: #2563eb;
+            --home-success: #34d399;
+            --home-danger: #f87171;
+            --home-shadow: rgba(15, 23, 42, 0.38);
+        }
+
+        [data-theme="light"] .home-page {
+            --home-bg: #f3f7fb;
+            --home-panel: rgba(255, 255, 255, 0.82);
+            --home-panel-strong: #ffffff;
+            --home-card: rgba(255, 255, 255, 0.9);
+            --home-line: rgba(37, 99, 235, 0.12);
+            --home-text: #0f172a;
+            --home-muted: #475569;
+            --home-accent: #2563eb;
+            --home-accent-strong: #1d4ed8;
+            --home-success: #1cb97c;
+            --home-danger: #ef4444;
+            --home-shadow: rgba(15, 23, 42, 0.08);
+        }
+
+        .home-page {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top right, rgba(96, 165, 250, 0.24), transparent 30rem),
+                linear-gradient(135deg, var(--home-bg) 0%, #0f172a 52%, #111827 100%);
+            color: var(--home-text);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        [data-theme="light"] .home-page {
+            background:
+                radial-gradient(circle at top right, rgba(37, 99, 235, 0.12), transparent 30rem),
+                linear-gradient(135deg, #f8fbff 0%, #edf4ff 48%, #e2e8f0 100%);
+        }
+
+        .home-page.is-loading > *:not(.page-loader):not(.skip-link) {
+            visibility: hidden;
+        }
+
+        /* Keyboard users: skip the nav and jump straight to the content. */
+        .skip-link {
+            position: absolute;
+            top: 0.75rem;
+            left: 50%;
+            z-index: 200;
+            padding: 0.7rem 1.1rem;
+            border-radius: 999px;
+            background: var(--home-accent-strong);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+            transform: translate(-50%, -220%);
+            transition: transform 0.2s ease;
+        }
+
+        .skip-link:focus-visible {
+            transform: translate(-50%, 0);
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 2px solid var(--home-accent);
+            outline-offset: 3px;
+            border-radius: 6px;
+        }
+
+        /* Content fades up once the loader clears. */
+        @media (prefers-reduced-motion: no-preference) {
+            .home-reveal {
+                animation: homeRevealUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+            }
+        }
+
+        @keyframes homeRevealUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: none; }
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 42%, rgba(37, 99, 235, 0.2), transparent 18rem),
+                linear-gradient(135deg, #07111f 0%, #0f172a 52%, #102a43 100%);
+            color: #f8fafc;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+
+        .page-loader::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.24;
+            background-image:
+                linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: radial-gradient(circle at center, #000 0%, transparent 72%);
+        }
+
+        .page-loader.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .page-loader-content {
+            position: relative;
+            display: grid;
+            justify-items: center;
+            gap: 1rem;
+            width: min(18rem, 78vw);
+            padding: 2rem 2.25rem;
+            border: 1px solid rgba(147, 197, 253, 0.2);
+            border-radius: 18px;
+            background: rgba(15, 23, 42, 0.54);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+        }
+
+        .page-loader-mark {
+            position: relative;
+            width: 4.25rem;
+            height: 4.25rem;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(147, 197, 253, 0.35);
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #38bdf8, #2563eb, #22c55e, #38bdf8);
+            box-shadow: 0 0 0 7px rgba(59, 130, 246, 0.08), 0 0 32px rgba(56, 189, 248, 0.3);
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0;
+            font-weight: 700;
+            isolation: isolate;
+            animation: homeLoaderRing 1.8s linear infinite;
+        }
+
+        .page-loader-mark::before {
+            content: '';
+            position: absolute;
+            width: 3.65rem;
+            height: 3.65rem;
+            border-radius: 50%;
+            background: #0f172a;
+        }
+
+        .page-loader-mark::after {
+            content: 'CS';
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            z-index: 1;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .page-loader small {
+            color: #cbd5e1;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .page-loader-progress {
+            width: 100%;
+            height: 3px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.16);
+        }
+
+        .page-loader-progress::after {
+            content: '';
+            display: block;
+            width: 42%;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #38bdf8, #60a5fa, #4ade80);
+            animation: homeLoaderProgress 1.4s ease-in-out infinite;
+        }
+
+        @keyframes homeLoaderRing {
+            from { background: conic-gradient(from 0deg, #38bdf8, #2563eb, #22c55e, #38bdf8); }
+            to { background: conic-gradient(from 360deg, #38bdf8, #2563eb, #22c55e, #38bdf8); }
+        }
+
+        @keyframes homeLoaderProgress {
+            0% { transform: translateX(-125%); }
+            100% { transform: translateX(275%); }
+        }
+
+        .home-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(14px);
+            background: rgba(15, 23, 42, 0.72);
+            border-bottom: 1px solid var(--home-line);
+        }
+
+        [data-theme="light"] .home-navbar {
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        .home-navbar nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 0.5rem 0;
+        }
+
+        .home-navbar nav a {
+            margin-left: 0;
+            padding: 0.7rem 0.95rem;
+            border-radius: 999px;
+            color: var(--home-text);
+            font-size: 0.83rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .home-navbar nav a:hover,
+        .home-navbar nav a.active {
+            background: rgba(96, 165, 250, 0.12);
+            color: var(--home-accent);
+            box-shadow: inset 0 0 0 1px rgba(96, 165, 250, 0.18);
+        }
+
+        .home-main {
+            width: min(1240px, 90%);
+            margin: 0 auto;
+        }
+
+        .home-hero {
+            min-height: calc(100vh - 76px);
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+            align-items: center;
+            gap: clamp(2rem, 6vw, 5.5rem);
+            padding: clamp(3rem, 7vw, 6rem) 0;
+        }
+
+        .home-hero-content {
+            max-width: 690px;
+            text-align: left;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.9rem;
+            border: 1px solid rgba(96, 165, 250, 0.25);
+            border-radius: 999px;
+            background: rgba(96, 165, 250, 0.08);
+            color: var(--home-accent);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .home-hero-content h1 {
+            max-width: 680px;
+            margin: 1.15rem 0 1.2rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.8rem, 6vw, 5.2rem);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+        }
+
+        .home-hero-content > p {
+            max-width: 575px;
+            color: var(--home-muted);
+            font-size: 1.06rem;
+            line-height: 1.75;
+        }
+
+        .home-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.8rem;
+        }
+
+        .home-actions .btn {
+            min-width: 150px;
+        }
+
+        .btn-lg {
+            padding: 0.95rem 1.75rem;
+            font-size: 1rem;
+        }
+
+        .home-navbar .logo {
+            color: var(--home-accent);
+            text-decoration: none;
+        }
+
+        .home-navbar .logo:hover {
+            text-decoration: underline;
+        }
+
+        .home-upcoming-empty {
+            color: var(--home-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .home-event-card {
+            margin-top: 2.5rem;
+            padding: 1.4rem;
+            border: 1px solid var(--home-line);
+            border-radius: 18px;
+            background: rgba(15, 23, 42, 0.62);
+            box-shadow: 0 18px 40px var(--home-shadow);
+            backdrop-filter: blur(8px);
+        }
+
+        [data-theme="light"] .home-event-card {
+            background: rgba(255, 255, 255, 0.82);
+        }
+
+        .home-event-kicker {
+            display: inline-block;
+            color: var(--home-accent);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .home-event-card .event-header {
+            margin-top: 0.8rem;
+        }
+
+        .home-event-card .event-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            line-height: 1.3;
+        }
+
+        .home-event-card .event-date,
+        .home-event-card .event-desc {
+            color: var(--home-muted);
+            font-size: 0.86rem;
+        }
+
+        .home-event-card .event-desc {
+            margin-top: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .home-event-card .stat-grid {
+            margin: 1.25rem 0 0;
+            gap: 0.75rem;
+        }
+
+        .home-event-card .stat-box {
+            border: 1px solid var(--home-line);
+            background: rgba(15, 23, 42, 0.32);
+            text-align: left;
+            border-radius: 12px;
+            padding: 0.9rem 0.8rem;
+        }
+
+        [data-theme="light"] .home-event-card .stat-box {
+            background: rgba(148, 163, 184, 0.08);
+        }
+
+        .home-event-card .stat-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.55rem;
+        }
+
+        .home-event-card .btn {
+            margin-top: 1.25rem;
+            padding: 0.95rem 1.5rem;
+        }
+
+        .home-visual {
+            position: relative;
+            min-height: 470px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.4rem;
+            overflow: hidden;
+            border: 1px solid rgba(147, 197, 253, 0.3);
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(17, 24, 39, 0.9), rgba(15, 23, 42, 0.76));
+            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.42);
+        }
+
+        .home-visual::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            right: -110px;
+            top: -90px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 24px;
+            transform: rotate(18deg);
+        }
+
+        .home-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0.9rem;
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(7, 17, 31, 0.1) 18%, rgba(7, 17, 31, 0.82) 100%);
+        }
+
+        .home-visual-image {
+            position: absolute;
+            inset: 0.9rem;
+            width: calc(100% - 1.8rem);
+            height: calc(100% - 1.8rem);
+            border-radius: 16px;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0.96;
+            filter: blur(7px);
+            transform: scale(1.05);
+            z-index: 0;
+        }
+
+        .visual-label,
+        .visual-footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .visual-label {
+            align-self: flex-start;
+            max-width: 100%;
+            padding: 0.5rem 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 999px;
+            background: rgba(7, 17, 31, 0.42);
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .visual-footer {
+            max-width: 100%;
+            padding: 0.82rem 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            background: rgba(7, 17, 31, 0.5);
+            backdrop-filter: blur(12px);
+        }
+
+        .visual-footer strong,
+        .visual-footer span {
+            display: block;
+            overflow-wrap: anywhere;
+        }
+
+        .visual-footer strong {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            line-height: 1.1;
+        }
+
+        .visual-footer span {
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.82rem;
+            line-height: 1.45;
+        }
+
+        /* ---------- Shared section shell ---------- */
+        .home-section {
+            padding: clamp(3.5rem, 8vw, 6.5rem) 0;
+            border-top: 1px solid var(--home-line);
+        }
+
+        .home-section-head {
+            max-width: 620px;
+            margin-bottom: 2.75rem;
+        }
+
+        .home-section-kicker {
+            display: inline-block;
+            margin-bottom: 0.85rem;
+            color: var(--home-accent);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .home-section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.9rem, 4vw, 2.8rem);
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .home-section-sub {
+            margin-top: 0.9rem;
+            color: var(--home-muted);
+            font-size: 1rem;
+            line-height: 1.75;
+        }
+
+        /* ---------- How it works ---------- */
+        .home-steps {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+            counter-reset: home-step;
+        }
+
+        .home-step {
+            position: relative;
+            padding: 1.75rem 1.6rem;
+            border: 1px solid var(--home-line);
+            border-radius: 18px;
+            background: var(--home-card);
+            box-shadow: 0 14px 34px var(--home-shadow);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .home-step:hover {
+            transform: translateY(-4px);
+            border-color: rgba(96, 165, 250, 0.34);
+        }
+
+        [data-theme="light"] .home-step:hover {
+            border-color: rgba(37, 99, 235, 0.32);
+        }
+
+        .home-step::before {
+            counter-increment: home-step;
+            content: "0" counter(home-step);
+            display: block;
+            margin-bottom: 1rem;
+            color: var(--home-accent);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .home-step h3 {
+            font-size: 1.1rem;
+            line-height: 1.35;
+        }
+
+        .home-step p {
+            margin-top: 0.6rem;
+            color: var(--home-muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        /* ---------- Why CampusSeat ---------- */
+        .home-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .home-feature {
+            padding: 1.5rem;
+            border: 1px solid var(--home-line);
+            border-radius: 16px;
+            background: var(--home-panel);
+        }
+
+        .home-feature-icon {
+            display: grid;
+            place-items: center;
+            width: 2.85rem;
+            height: 2.85rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            background: rgba(96, 165, 250, 0.14);
+            color: var(--home-accent);
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        [data-theme="light"] .home-feature-icon {
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .home-feature h3 {
+            font-size: 1.02rem;
+            line-height: 1.4;
+        }
+
+        .home-feature p {
+            margin-top: 0.5rem;
+            color: var(--home-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* ---------- Upcoming events ---------- */
+        .home-upcoming-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 2.25rem;
+        }
+
+        .home-upcoming-head .home-section-head {
+            margin-bottom: 0;
+        }
+
+        .home-upcoming-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .home-upcoming-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            padding: 1.4rem;
+            border: 1px solid var(--home-line);
+            border-radius: 18px;
+            background: var(--home-card);
+            box-shadow: 0 14px 34px var(--home-shadow);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .home-upcoming-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(96, 165, 250, 0.34);
+        }
+
+        [data-theme="light"] .home-upcoming-card:hover {
+            border-color: rgba(37, 99, 235, 0.32);
+        }
+
+        .home-upcoming-tag {
+            align-self: flex-start;
+            padding: 0.32rem 0.7rem;
+            border: 1px solid rgba(96, 165, 250, 0.28);
+            border-radius: 999px;
+            background: rgba(96, 165, 250, 0.1);
+            color: var(--home-accent);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .home-upcoming-card h3 {
+            font-size: 1.05rem;
+            line-height: 1.4;
+        }
+
+        .home-upcoming-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            color: var(--home-muted);
+            font-size: 0.86rem;
+            line-height: 1.5;
+        }
+
+        .home-upcoming-seats {
+            margin-top: auto;
+            padding-top: 0.5rem;
+            border-top: 1px dashed var(--home-line);
+            color: var(--home-success);
+            font-size: 0.84rem;
+            font-weight: 700;
+        }
+
+        .home-upcoming-seats.is-full {
+            color: var(--home-danger);
+        }
+
+        .home-upcoming-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .home-upcoming-actions .btn {
+            flex: 1 1 8rem;
+            padding: 0.7rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* ---------- Closing call to action ---------- */
+        .home-cta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            padding: clamp(2rem, 5vw, 3rem);
+            border: 1px solid rgba(96, 165, 250, 0.26);
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 12% 20%, rgba(96, 165, 250, 0.2), transparent 22rem),
+                linear-gradient(135deg, rgba(37, 99, 235, 0.16), rgba(15, 23, 42, 0.06));
+        }
+
+        [data-theme="light"] .home-cta {
+            background:
+                radial-gradient(circle at 12% 20%, rgba(37, 99, 235, 0.1), transparent 22rem),
+                linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(255, 255, 255, 0.5));
+        }
+
+        .home-cta h2 {
+            max-width: 30ch;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+        }
+
+        .home-cta p {
+            max-width: 46ch;
+            margin-top: 0.75rem;
+            color: var(--home-muted);
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+
+        .home-cta-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        /* ---------- Footer ---------- */
+        .home-footer {
+            padding: 2.25rem 0;
+            border-top: 1px solid var(--home-line);
+            color: var(--home-muted);
+            font-size: 0.84rem;
+            text-align: center;
+        }
+
+        .home-footer p + p {
+            margin-top: 0.4rem;
+        }
+
+        .home-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1.25rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .home-footer-links a {
+            color: var(--home-muted);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .home-footer-links a:hover {
+            color: var(--home-accent);
+        }
+
+        @media (max-width: 900px) {
+            .home-hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .home-visual {
+                min-height: 320px;
+            }
+
+            .home-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .home-cta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .home-main {
+                width: calc(100% - 2rem);
+            }
+
+            .home-hero {
+                padding: 3rem 0;
+            }
+
+            .home-hero-content h1 {
+                font-size: 2.6rem;
+            }
+
+            .home-event-card .stat-grid {
+                gap: 0.55rem;
+            }
+
+            .home-event-card .stat-box {
+                padding: 0.75rem;
+            }
+
+            .home-upcoming-head {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body class="home-page is-loading">
+    <div class="page-loader" id="pageLoader" role="status" aria-live="polite" aria-label="Loading CampusSeat">
+        <div class="page-loader-content">
+            <div class="page-loader-mark" aria-hidden="true"></div>
+            <small>Loading CampusSeat</small>
+            <div class="page-loader-progress" aria-hidden="true"></div>
+        </div>
+    </div>
+
+    <a class="skip-link" href="#homeMain">Skip to main content</a>
+
+<header class="navbar home-navbar">
+    <a class="logo" href="index.html" aria-label="CampusSeat home">
+        CampusSeat
+    </a>
+
+    <nav aria-label="Primary">
+        <a href="index.html" class="active" aria-current="page">Home</a>
+        <a href="pages/events.html">Events</a>
+        <a href="pages/booking.html">Book Seat</a>
+        <a href="pages/my-booking.html">My Booking</a>
+
+        <button id="logoutBtn" class="nav-logout" type="button">
+            Logout
+        </button>
+
+        <button id="themeToggleBtn" class="theme-toggle"
+            type="button" aria-label="Toggle theme">
+            ☀ Light
+        </button>
+    </nav>
+</header>
+
+    <main class="home-main" id="homeMain">
+        <section class="home-hero" aria-labelledby="heroTitle">
+        <div class="home-hero-content home-reveal">
+            <span class="badge">Official College Portal</span>
+            <h1 id="heroTitle">A better seat for every campus moment.</h1>
+            <p>Discover upcoming auditorium events, choose your preferred seat, and carry a digital pass straight to the entrance.</p>
+
+            <div class="home-actions">
+                <a href="pages/events.html" class="btn btn-primary">Choose a seat</a>
+                <a href="pages/events.html" class="btn btn-secondary">Explore events</a>
+            </div>
+            
+            <div class="event-card home-event-card" id="activeEventCard">
+                <span class="home-event-kicker">Up next on stage</span>
+                <div class="event-header">
+                    <h2 id="eventTitle">Upcoming event</h2>
+                    <span class="event-date" id="eventDate">Loading event information…</span>
+                </div>
+                <p class="event-desc" id="eventDesc">Published event details will appear here.</p>
+                
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <span class="stat-num" id="statTotal">—</span>
+                        <span class="stat-label">Total Seats</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num text-success" id="statAvailable">—</span>
+                        <span class="stat-label">Available</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num text-danger" id="statBooked">—</span>
+                        <span class="stat-label">Booked</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num text-muted" id="statReserved">—</span>
+                        <span class="stat-label">Reserved</span>
+                    </div>
+                </div>
+
+                <a id="heroBookLink" href="pages/events.html" class="btn btn-primary btn-block btn-lg">Browse events</a>
+            </div>
+        </div>
+
+        <aside class="home-visual" aria-label="Auditorium seat availability preview">
+            <span class="visual-label">Main auditorium · live layout</span>
+            <img class="home-visual-image" src="image/main audi.jpeg" alt="Main auditorium filled for a campus event" loading="lazy" decoding="async">
+            <div class="visual-footer">
+                <strong>225 seats per event</strong>
+                <span id="visualAvailable">Availability loads from Firebase</span>
+                <span>15 rows · 15 seats per row</span>
+            </div>
+        </aside>
+        </section>
+
+        <section class="home-section" aria-labelledby="howTitle">
+            <div class="home-section-head">
+                <span class="home-section-kicker">How it works</span>
+                <h2 class="home-section-title" id="howTitle">Three steps from event to entrance.</h2>
+                <p class="home-section-sub">No queues, no paper slips. Pick an event, claim an exact seat, and show the pass on your phone.</p>
+            </div>
+
+            <div class="home-steps">
+                <article class="home-step">
+                    <h3>Browse events</h3>
+                    <p>Symposiums, cultural fests, seminars and workshops — all in one place with live seat counts.</p>
+                </article>
+                <article class="home-step">
+                    <h3>Pick your seat</h3>
+                    <p>See each event’s 225-seat layout and choose an open seat.</p>
+                </article>
+                <article class="home-step">
+                    <h3>Carry a digital pass</h3>
+                    <p>Confirm your booking and get a QR pass you can print, screenshot or open from My Booking.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="home-section" aria-labelledby="whyTitle">
+            <div class="home-section-head">
+                <span class="home-section-kicker">Why CampusSeat</span>
+                <h2 class="home-section-title" id="whyTitle">Built for students and organisers.</h2>
+                <p class="home-section-sub">Everything the auditorium needs to run a full house without double bookings.</p>
+            </div>
+
+            <div class="home-features">
+                <article class="home-feature">
+                    <div class="home-feature-icon" aria-hidden="true">🎟</div>
+                    <h3>Exact seat selection</h3>
+                    <p>15 rows of 15 seats with a center aisle, so groups can sit together and no seat is sold twice.</p>
+                </article>
+                <article class="home-feature">
+                    <div class="home-feature-icon" aria-hidden="true">📱</div>
+                    <h3>QR digital pass</h3>
+                    <p>Every booking generates a scannable pass with your name, roll number, seat and event details.</p>
+                </article>
+                <article class="home-feature">
+                    <div class="home-feature-icon" aria-hidden="true">🔎</div>
+                    <h3>My Booking desk</h3>
+                    <p>Search, filter, print or cancel reservations for the current student session at any time.</p>
+                </article>
+                <article class="home-feature">
+                    <div class="home-feature-icon" aria-hidden="true">📊</div>
+                    <h3>Organiser dashboard</h3>
+                    <p>Admins track seat metrics, search bookings, export CSV reports and reset the layout.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="home-section" aria-labelledby="upcomingTitle">
+            <div class="home-upcoming-head">
+                <div class="home-section-head">
+                    <span class="home-section-kicker">Upcoming events</span>
+                    <h2 class="home-section-title" id="upcomingTitle">What's on next.</h2>
+                </div>
+                <a href="pages/events.html" class="btn btn-secondary">View all events</a>
+            </div>
+
+            <div class="home-upcoming-list" id="homeUpcomingList">
+                <noscript>
+                    <article class="home-upcoming-card">
+                        <span class="home-upcoming-tag">Technical</span>
+                        <h3>Enable JavaScript to load published events</h3>
+                        <div class="home-upcoming-meta">
+                            <span>Events are loaded from Firebase.</span>
+                            <span>Main Auditorium</span>
+                        </div>
+                        <span class="home-upcoming-seats">Seats available</span>
+                        <div class="home-upcoming-actions">
+                            <a class="btn btn-primary" href="pages/event-details.html?id=tech-symposium-2026">View details</a>
+                        </div>
+                    </article>
+                </noscript>
+            </div>
+        </section>
+
+        <section class="home-section" aria-labelledby="ctaTitle">
+            <div class="home-cta">
+                <div>
+                    <h2 id="ctaTitle">Ready to claim your seat?</h2>
+                    <p>Booking takes under a minute. Choose your seat on the live auditorium map and you're done.</p>
+                </div>
+                <div class="home-cta-actions">
+                    <a href="pages/booking.html" class="btn btn-primary btn-lg">Book a seat</a>
+                    <a href="pages/my-booking.html" class="btn btn-secondary btn-lg">My Booking</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="home-footer">
+        <div class="home-main">
+            <nav class="home-footer-links" aria-label="Footer">
+                <a href="index.html">Home</a>
+                <a href="pages/events.html">Events</a>
+                <a href="pages/booking.html">Book Seat</a>
+                <a href="pages/my-booking.html">My Booking</a>
+                <a href="pages/login.html">Admin</a>
+            </nav>
+            <p>© 2026 CampusSeat • Hi-tech Institute of Engineering and Technology</p>
+            <p>Seat availability updates live as bookings are confirmed.</p>
+        </div>
+    </footer>
+    <script type="module">
+    import { auth, onAuthStateChanged, isAdmin } from "./js/auth.js";
+
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            window.location.replace("pages/login.html");
+            return;
+        }
+
+        if (await isAdmin(user)) {
+            window.location.replace("pages/admin.html");
+        }
+    });
+</script>
+<script type="module">
+    import { auth, signOut } from "./js/auth.js";
+
+    document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+        try {
+            await signOut(auth);
+            window.location.replace("pages/login.html");
+        } catch (error) {
+            alert("Logout failed. Please try again.");
+            console.error(error);
+        }
+    });
+</script>
+    <script type="module" src="js/events.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

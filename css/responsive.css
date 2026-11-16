@@ -1,0 +1,188 @@
+@media (max-width: 900px) {
+    .booking-layout { grid-template-columns: 1fr; }
+    .hero-content h1 { font-size: 1.8rem; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .seat-map-wrapper { overflow-x: auto; padding-bottom: 1rem; }
+    .form-row { grid-template-columns: 1fr; }
+}
+
+@media print {
+    .no-print { display: none !important; }
+    body { background: white; color: black; }
+    .digital-pass { box-shadow: none; border: 2px solid #000; }
+}
+/* =====================================
+   CampusSeat - Mobile Responsiveness
+===================================== */
+
+@media (max-width: 900px) {
+    .booking-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .seat-map-wrapper {
+        overflow-x: auto;
+        padding-bottom: 1rem;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .container {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .hero-content h1 {
+        font-size: 1.6rem;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .booking-layout,
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .seat-map-wrapper {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .admin-event-form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-event-form input,
+    .admin-event-form select,
+    .admin-event-form button {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .admin-event-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-event-card-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .admin-event-card-actions button {
+        flex: 1;
+    }
+
+    .admin-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    button,
+    input,
+    select {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 380px) {
+    .hero-content h1 {
+        font-size: 1.4rem;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .digital-pass {
+        box-shadow: none;
+        border: 2px solid #000;
+    }
+}
+/* Mobile Navbar */
+@media (max-width: 600px) {
+    .home-navbar {
+        padding: 8px 12px;
+    }
+
+    .home-navbar .logo {
+        font-size: 1.2rem;
+        white-space: nowrap;
+    }
+
+    .home-navbar nav {
+        justify-content: flex-start;
+        gap: 5px;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .home-navbar nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .home-navbar nav a,
+    .home-navbar nav button {
+        flex-shrink: 0;
+        font-size: 12px;
+        padding: 9px 11px;
+    }
+
+    .home-hero {
+        gap: 25px;
+    }
+
+    .home-visual {
+        min-height: 280px;
+    }
+
+    .home-actions .btn {
+        flex: 1 1 100%;
+        text-align: center;
+    }
+
+    .home-cta-actions {
+        width: 100%;
+    }
+
+    .home-cta-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+}

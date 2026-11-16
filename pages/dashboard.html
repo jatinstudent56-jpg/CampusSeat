@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CampusSeat | Student dashboard</title><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/responsive.css"></head>
+<body><header class="navbar"><a class="logo" href="../index.html">CampusSeat</a><nav><a href="events.html">Events</a> <a href="my-booking.html">My bookings</a> <button id="logout" type="button">Sign out</button></nav></header><main class="home-main"><h1>Your dashboard</h1><p id="welcome">Loading your account…</p><section class="home-upcoming-list" id="dashBookings" aria-live="polite"></section><a class="btn btn-primary" href="events.html">Browse events</a></main><script type="module">
+import {requireUser,signOut,auth,db} from '../js/auth.js';
+import {collection,getDocs,query,where} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+const esc=v=>String(v??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+try{const u=await requireUser();document.getElementById('welcome').textContent=`Signed in as ${u.displayName||u.email}`;const s=await getDocs(query(collection(db,'bookings'),where('uid','==',u.uid)));const root=document.getElementById('dashBookings');root.innerHTML=s.empty?'<p>You have no bookings yet.</p>':s.docs.map(d=>{const b=d.data();return `<article class="home-upcoming-card"><h2>${esc(b.eventTitle)}</h2><p>${esc(b.eventDate)} · Seat ${esc(b.seatId)} · ${esc(b.status)}</p><a href="confirmation.html?id=${encodeURIComponent(d.id)}">View booking pass</a></article>`}).join('')}catch(e){document.getElementById('welcome').textContent=e.message}
+document.getElementById('logout').addEventListener('click',async()=>{await signOut(auth);location.href='login.html'});
+</script></body></html>

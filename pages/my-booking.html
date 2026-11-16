@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CampusSeat | My Booking</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/my-booking.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+    <style>
+        .my-booking-page {
+            min-height: 100vh;
+            background: radial-gradient(circle at 85% 0%, rgba(59, 130, 246, 0.16), transparent 28rem), var(--bg-primary);
+        }
+
+        .booking-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(16px);
+        }
+
+        .booking-hero {
+            padding: clamp(3rem, 7vw, 5.5rem) 20px 2.5rem;
+            text-align: left;
+        }
+
+        .booking-hero-content,
+        .booking-stats,
+        .booking-toolbar,
+        .booking-list {
+            max-width: 1120px;
+        }
+
+        .booking-hero-content {
+            margin: 0 auto;
+        }
+
+        .booking-hero h1 {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            letter-spacing: -0.02em;
+        }
+
+        .booking-hero p {
+            max-width: 560px;
+            color: var(--text-secondary);
+        }
+
+        .booking-stats {
+            gap: 0.9rem;
+        }
+
+        .booking-stat-card {
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 12px;
+            background: rgba(30, 41, 59, 0.78);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.14);
+            text-align: left;
+        }
+
+        .booking-stat-number {
+            font-size: 2rem;
+        }
+
+        .booking-stat-label {
+            color: var(--text-secondary);
+        }
+
+        .booking-toolbar {
+            padding: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 12px;
+            background: rgba(30, 41, 59, 0.72);
+        }
+
+        .booking-search input,
+        .booking-filter-btn {
+            border-color: rgba(148, 163, 184, 0.22);
+            color: var(--text-primary);
+            background: var(--card-bg);
+        }
+
+        .booking-search input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .booking-filter-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .booking-card {
+            border-color: rgba(148, 163, 184, 0.18);
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.16);
+        }
+
+        .booking-card-header {
+            border-bottom-color: rgba(148, 163, 184, 0.16);
+        }
+
+        .booking-info-box,
+        .booking-card-footer {
+            background: rgba(51, 65, 85, 0.5);
+        }
+
+        .booking-info-box {
+            border: 1px solid rgba(148, 163, 184, 0.12);
+        }
+
+        .booking-info-label,
+        .booking-created {
+            color: var(--text-secondary);
+        }
+
+        .booking-info-value,
+        .booking-event-title,
+        .booking-card-footer {
+            color: var(--text-primary);
+        }
+
+        .secondary-btn {
+            color: var(--text-primary);
+            border-color: rgba(148, 163, 184, 0.25);
+            background: transparent;
+        }
+
+        .no-booking {
+            padding: 3rem 20px;
+        }
+
+        .no-booking p {
+            color: var(--text-secondary);
+        }
+
+        .ticket-dialog,
+        .cancel-dialog {
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        @media (max-width: 760px) {
+            .booking-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 520px) {
+            .booking-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+            }
+
+            .booking-stat-card {
+                padding: 1rem;
+            }
+
+            .booking-stat-number {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar booking-navbar">
+
+    <div class="logo">
+        CampusSeat
+    </div>
+
+    <nav>
+        <a href="../index.html">Home</a>
+
+        <a href="events.html">
+            Events
+        </a>
+
+        <a
+            href="my-booking.html"
+            class="active"
+        >
+            My Booking
+        </a>
+
+        <a href="admin.html">
+            Admin
+        </a>
+
+        <button
+            id="themeToggleBtn"
+            class="theme-toggle"
+            type="button"
+        >
+            ☀ Light
+        </button>
+    </nav>
+
+</header>
+
+
+<main class="my-booking-page">
+
+    <!-- PAGE HEADER -->
+    <section class="booking-hero">
+
+        <div class="booking-hero-content">
+
+            <span class="badge">
+                Student Portal
+            </span>
+
+            <h1>
+                My Bookings
+            </h1>
+
+            <p>
+                View, print, or cancel your reservations from one place.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- BOOKING STATS -->
+    <section class="booking-stats">
+
+        <div class="booking-stat-card">
+
+            <span
+                class="booking-stat-number"
+                id="totalBookings"
+            >
+                —
+            </span>
+
+            <span class="booking-stat-label">
+                Total Bookings
+            </span>
+
+        </div>
+
+
+        <div class="booking-stat-card">
+
+            <span
+                class="booking-stat-number booking-success"
+                id="confirmedBookings"
+            >
+                —
+            </span>
+
+            <span class="booking-stat-label">
+                Confirmed
+            </span>
+
+        </div>
+
+
+        <div class="booking-stat-card">
+
+            <span
+                class="booking-stat-number booking-danger"
+                id="cancelledBookings"
+            >
+                —
+            </span>
+
+            <span class="booking-stat-label">
+                Cancelled
+            </span>
+
+        </div>
+
+
+        <div class="booking-stat-card">
+
+            <span
+                class="booking-stat-number"
+                id="totalSeatsBooked"
+            >
+                —
+            </span>
+
+            <span class="booking-stat-label">
+                Seats Booked
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- TOOLBAR -->
+    <section class="booking-toolbar">
+
+        <span class="text-muted">Reservation directory</span>
+
+        <div class="booking-search">
+
+            <label
+                for="bookingSearch"
+                class="sr-only"
+            >
+                Search bookings
+            </label>
+
+            <input
+                type="search"
+                id="bookingSearch"
+                placeholder="Search by event, booking ID or seat..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="booking-filter">
+
+            <button
+                class="booking-filter-btn active"
+                data-status="all"
+                type="button"
+            >
+                All
+            </button>
+
+            <button
+                class="booking-filter-btn"
+                data-status="Confirmed"
+                type="button"
+            >
+                Confirmed
+            </button>
+
+            <button
+                class="booking-filter-btn"
+                data-status="Cancelled"
+                type="button"
+            >
+                Cancelled
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOADING -->
+    <section
+        class="booking-loading"
+        id="bookingLoading"
+        hidden
+    >
+
+        <div class="loading-spinner"></div>
+
+        <p>
+            Loading your bookings...
+        </p>
+
+    </section>
+
+
+    <!-- BOOKINGS -->
+    <section
+        class="booking-list"
+        id="bookingList"
+    >
+    </section>
+
+
+    <!-- EMPTY STATE -->
+    <section
+        class="no-booking"
+        id="noBooking"
+        hidden
+    >
+
+        <div class="no-booking-icon">
+            🎟️
+        </div>
+
+        <h2>
+            No Bookings Found
+        </h2>
+
+        <p id="noBookingMessage">
+            You have not booked any event yet.
+        </p>
+
+        <a
+            href="events.html"
+            class="my-booking-btn primary-btn"
+        >
+            Explore Events
+        </a>
+
+    </section>
+
+</main>
+
+
+<!-- TICKET MODAL -->
+
+<div
+    class="ticket-modal"
+    id="ticketModal"
+    hidden
+    aria-hidden="true"
+>
+
+    <div
+        class="ticket-overlay"
+        id="ticketOverlay"
+    ></div>
+
+
+    <div
+        class="ticket-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="ticketModalTitle"
+    >
+
+        <button
+            class="ticket-close"
+            id="closeTicketBtn"
+            type="button"
+            aria-label="Close ticket"
+        >
+            ×
+        </button>
+
+
+        <div id="ticketContent">
+        </div>
+
+
+        <div class="ticket-actions">
+
+            <button
+                id="printTicketBtn"
+                class="my-booking-btn primary-btn"
+                type="button"
+            >
+                🖨 Print Ticket
+            </button>
+
+            <button
+                id="closeTicketBottomBtn"
+                class="my-booking-btn secondary-btn"
+                type="button"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CANCEL MODAL -->
+
+<div
+    class="cancel-modal"
+    id="cancelModal"
+    hidden
+>
+
+    <div class="ticket-overlay"></div>
+
+
+    <div class="cancel-dialog">
+
+        <div class="cancel-icon">
+            ⚠️
+        </div>
+
+        <h2>
+            Cancel Booking?
+        </h2>
+
+        <p>
+            Are you sure you want to cancel this booking?
+        </p>
+
+        <p class="cancel-warning">
+            The selected seats will become available again.
+        </p>
+
+
+        <div class="cancel-actions">
+
+            <button
+                id="confirmCancelBtn"
+                class="my-booking-btn danger-btn"
+                type="button"
+            >
+                Yes, Cancel
+            </button>
+
+            <button
+                id="closeCancelBtn"
+                class="my-booking-btn secondary-btn"
+                type="button"
+            >
+                Keep Booking
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer class="site-footer">
+
+    <p>
+        © 2026 CampusSeat • Hi-tech Institute of Engineering and Technology
+    </p>
+
+</footer>
+
+
+<script type="module" src="../js/my-booking.js"></script>
+<script src="../js/app.js"></script>
+
+</body>
+</html>

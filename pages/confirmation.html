@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusSeat | Booking Confirmation</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        .confirmation-page {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.16), transparent 25rem),
+                var(--bg-primary);
+        }
+
+        .confirmation-shell {
+            width: min(720px, 92%);
+            margin: 0 auto;
+            padding: 3.5rem 0;
+        }
+
+        .confirmation-heading {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .success-mark {
+            width: 3.5rem;
+            height: 3.5rem;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 1rem;
+            border: 1px solid rgba(34, 197, 94, 0.45);
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.14);
+            color: #4ade80;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .confirmation-heading h1 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .confirmation-heading p {
+            color: var(--text-secondary);
+        }
+
+        .digital-pass {
+            max-width: 620px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 14px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .pass-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.3rem 1.5rem;
+            background: #172554;
+            text-align: left;
+        }
+
+        .pass-header h2 {
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+        }
+
+        .pass-header p {
+            color: #bfdbfe;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        .pass-status {
+            padding: 0.4rem 0.65rem;
+            border: 1px solid rgba(134, 239, 172, 0.35);
+            border-radius: 999px;
+            color: #bbf7d0;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        .pass-body {
+            display: grid;
+            grid-template-columns: 0.8fr 1.5fr 0.9fr;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.6rem;
+            text-align: left;
+        }
+
+        .pass-seat-block {
+            padding-right: 1.25rem;
+            border-right: 1px dashed #cbd5e1;
+            text-align: center;
+        }
+
+        .pass-seat-label {
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .pass-seat-badge {
+            font-size: clamp(2.4rem, 7vw, 3.5rem);
+            line-height: 1;
+            margin-top: 0.45rem;
+        }
+
+        .pass-details {
+            display: grid;
+            gap: 0.55rem;
+        }
+
+        .pass-details p {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.8rem;
+            color: #64748b;
+            font-size: 0.78rem;
+        }
+
+        .pass-details strong {
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .pass-details span {
+            color: #0f172a;
+            text-align: right;
+        }
+
+        .pass-qr {
+            display: grid;
+            justify-items: center;
+            gap: 0.45rem;
+            padding-left: 1.25rem;
+            border-left: 1px dashed #cbd5e1;
+        }
+
+        .pass-qr::after {
+            content: 'Scan at entry';
+            color: #64748b;
+            font-size: 0.68rem;
+        }
+
+        #qrcode {
+            padding: 0.35rem;
+            background: #fff;
+        }
+
+        .pass-footer {
+            padding: 0.9rem 1.5rem;
+            border-top: 1px dashed #cbd5e1;
+            color: #64748b;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        .confirmation-note {
+            margin: 1rem auto 0;
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            text-align: center;
+        }
+
+        .pass-actions {
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 620px) {
+            .confirmation-shell {
+                padding: 2rem 0;
+            }
+
+            .pass-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .pass-body {
+                grid-template-columns: 1fr;
+                text-align: left;
+            }
+
+            .pass-seat-block {
+                padding: 0 0 1rem;
+                border-right: 0;
+                border-bottom: 1px dashed #cbd5e1;
+                text-align: left;
+            }
+
+            .pass-qr {
+                padding: 1rem 0 0;
+                border-left: 0;
+                border-top: 1px dashed #cbd5e1;
+            }
+        }
+
+        @media print {
+            .confirmation-page {
+                background: #fff;
+            }
+
+            .confirmation-heading,
+            .confirmation-note {
+                display: none;
+            }
+
+            .confirmation-shell {
+                width: 100%;
+                padding: 0;
+            }
+
+            .digital-pass {
+                max-width: none;
+                border: 2px solid #0f172a;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body class="confirmation-page">
+    <main class="confirmation-shell">
+        <section class="confirmation-heading" aria-labelledby="confirmationTitle">
+            <div class="success-mark" aria-hidden="true">✓</div>
+            <h1 id="confirmationTitle">Checking your booking…</h1>
+            <p>Your digital entry pass is ready. Keep it available for the auditorium gate.</p>
+        </section>
+
+        <div class="digital-pass" id="printablePass" hidden>
+            <div class="pass-header">
+                <div>
+                    <h2>STATE COLLEGE AUDITORIUM</h2>
+                    <p id="passEventName">—</p>
+                </div>
+                <span class="pass-status">CONFIRMED</span>
+            </div>
+            <div class="pass-body">
+                <div class="pass-seat-block">
+                    <span class="pass-seat-label">Your seat</span>
+                    <div class="pass-seat-badge" id="passSeatId">A01</div>
+                </div>
+                <div class="pass-details">
+                    <p><strong>Booking ID:</strong> <span id="passBookingId">—</span></p>
+                    <p><strong>Student Name:</strong> <span id="passName">--</span></p>
+                    <p><strong>Roll Number:</strong> <span id="passRoll">--</span></p>
+                    <p><strong>Course/Branch:</strong> <span id="passCourseBranch">--</span></p>
+                    <p><strong>Year/Sem:</strong> <span id="passYearSem">--</span></p>
+                    <p><strong>Date & Time:</strong> <span id="passDateTime">24 Oct 2026 | 10:00 AM</span></p>
+                </div>
+                <div class="pass-qr">
+                    <div id="qrcode"></div>
+                </div>
+            </div>
+            <div class="pass-footer">
+                Present this pass at the auditorium entry gate. The QR code identifies your reservation.
+            </div>
+        </div>
+
+        <p class="confirmation-note no-print">Your booking will appear here after it is verified.</p>
+
+        <div class="pass-actions no-print">
+            <button onclick="window.print()" class="btn btn-primary" type="button">Print pass</button>
+            <a href="../pages/my-booking.html" class="btn btn-secondary">My bookings</a>
+            <a href="../index.html" class="btn btn-secondary">Back to home</a>
+        </div>
+    </main>
+
+    <script type="module" src="../js/confirmation.js"></script>
+</body>
+</html>

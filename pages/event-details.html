@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusSeat | Event Details</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/event.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .details-page {
+            min-height: 100vh;
+            background: radial-gradient(circle at 86% 0%, rgba(59, 130, 246, 0.18), transparent 26rem), var(--bg-primary);
+        }
+
+        .details-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(16px);
+        }
+
+        .details-nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: min(1240px, 90%);
+            margin: 0 auto;
+        }
+
+        .details-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .details-nav-links a {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            text-decoration: none;
+        }
+
+        .details-nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .details-main {
+            width: min(1240px, 90%);
+            margin: 0 auto;
+            padding: 2rem 0 4rem;
+        }
+
+        .details-breadcrumb {
+            display: inline-flex;
+            margin-bottom: 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+
+        .details-breadcrumb:hover {
+            color: var(--accent-color);
+        }
+
+        #eventDetails {
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 16px;
+            background: rgba(30, 41, 59, 0.78);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-banner {
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-end;
+            padding: clamp(1.5rem, 5vw, 3.5rem);
+            position: relative;
+            isolation: isolate;
+        }
+
+        .details-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.04), rgba(15, 23, 42, 0.82));
+        }
+
+        .details-banner.tech { background: linear-gradient(135deg, #0f766e, #2563eb); }
+        .details-banner.cultural { background: linear-gradient(135deg, #be185d, #7c3aed); }
+        .details-banner.seminar { background: linear-gradient(135deg, #b45309, #dc2626); }
+        .details-banner.workshop { background: linear-gradient(135deg, #0369a1, #0891b2); }
+
+        .details-banner .event-category {
+            position: static;
+            margin-bottom: 0.9rem;
+        }
+
+        .details-banner h1 {
+            max-width: 800px;
+            margin: 0;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            line-height: 1.02;
+        }
+
+        .details-banner p {
+            margin-top: 0.8rem;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.95rem;
+        }
+
+        .details-content {
+            padding: clamp(1.4rem, 4vw, 2.8rem);
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-box {
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.7rem;
+            padding: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            border-radius: 10px;
+            background: rgba(51, 65, 85, 0.5);
+        }
+
+        .detail-box-label {
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .detail-box-value {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
+        .details-content h2,
+        .details-content h3 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .details-content h2 {
+            font-size: 1.35rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .details-content h3 {
+            font-size: 0.95rem;
+            margin-top: 1.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .details-description {
+            max-width: 780px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.75;
+        }
+
+        .details-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 2rem;
+        }
+
+        .details-actions .event-btn {
+            flex: 0 1 auto;
+            min-width: 170px;
+        }
+
+        .details-empty {
+            padding: 4rem 1.5rem;
+            text-align: center;
+        }
+
+        .details-empty p {
+            color: var(--text-secondary);
+            margin: 0.6rem 0 1.5rem;
+        }
+
+        @media (max-width: 800px) {
+            .details-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 560px) {
+            .details-nav-links a { display: none; }
+            .details-main, .details-nav-content { width: calc(100% - 2rem); }
+            .details-grid { grid-template-columns: 1fr; }
+            .details-actions, .details-actions .event-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body class="details-page">
+    <header class="navbar details-navbar">
+        <div class="details-nav-content">
+            <a href="../index.html" class="logo">CampusSeat</a>
+            <nav class="details-nav-links" aria-label="Event navigation">
+                <a href="events.html">All events</a>
+                <a href="../index.html">Home</a>
+                <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Toggle theme">☀ Light</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="details-main">
+        <a class="details-breadcrumb" href="events.html">← Back to all events</a>
+        <section id="eventDetails" aria-live="polite">
+            <div class="details-empty">
+                <h1>Loading event details...</h1>
+                <p>Please wait while the event information is loaded.</p>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="../js/events.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>
