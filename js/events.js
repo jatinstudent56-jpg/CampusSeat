@@ -118,7 +118,9 @@ async function init() {
       document.getElementById("eventDate").textContent = `${fmt(hero.date)} · ${hero.startTime || "Time TBA"}`;
       document.getElementById("eventDesc").textContent = `${hero.venue || "Campus"} · ${hero.description || ""}`;
       const bookLink = document.getElementById("heroBookLink"); if (bookLink) bookLink.href = `pages/booking.html?event=${encodeURIComponent(hero.id)}`;
-        al = Math.min(450, Math.max(1, Number(hero.totalSeats) || 225)), booked = hero.bookedSeats || 0, blocked = hero.blockedSeats || 0;
+      const total = Math.min(450, Math.max(1, Number(hero.totalSeats) || 225));
+      const booked = Number(hero.bookedSeats) || 0;
+      const blocked = Number(hero.blockedSeats) || 0;
       const available = hero.availableSeats;
       for (const [id, value] of [["statTotal", total], ["statAvailable", available], ["statBooked", booked], ["statReserved", blocked]]) { const n = document.getElementById(id); if (n) n.textContent = String(value); }
       const availability = document.getElementById("visualAvailable"); if (availability) availability.textContent = `${available} seats available for ${hero.title}`;
